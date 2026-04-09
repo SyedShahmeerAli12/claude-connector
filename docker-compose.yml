@@ -1,0 +1,27 @@
+services:
+  mcp-app:
+    build: .
+    container_name: mcp-app
+    restart: unless-stopped
+    expose:
+      - "8000"
+    networks:
+      - mcp-network
+
+  mcp-nginx:
+    image: nginx:alpine
+    container_name: mcp-nginx
+    restart: unless-stopped
+    ports:
+      - "8500:8500"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - mcp-app
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

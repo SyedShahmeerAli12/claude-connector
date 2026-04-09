@@ -1,0 +1,7 @@
+services:
+  mcp-app:
+    build: .
+    container_name: mcp-app-local
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
