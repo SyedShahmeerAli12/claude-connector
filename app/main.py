@@ -1,7 +1,14 @@
 import yfinance as yf
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 
-mcp = FastMCP("saudi-exchange-mcp")
+mcp = FastMCP(
+    "saudi-exchange-mcp",
+    transport_security=TransportSecuritySettings(
+        allowed_hosts=["aiserver.digitrends.sa", "aiserver.digitrends.sa:8500"],
+        allowed_origins=["https://aiserver.digitrends.sa", "https://aiserver.digitrends.sa:8500"],
+    ),
+)
 
 TOP_SAUDI_STOCKS = {
     "2222.SR": "Saudi Aramco",
