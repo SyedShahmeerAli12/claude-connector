@@ -111,4 +111,4 @@ def get_stock_info(symbol: str) -> dict:
 if __name__ == "__main__":
     import uvicorn
     app = mcp.streamable_http_app()
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000, forwarded_allow_ips="*")
