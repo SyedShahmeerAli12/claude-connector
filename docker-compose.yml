@@ -7,21 +7,10 @@ services:
       - "8000"
     networks:
       - mcp-network
-
-  mcp-nginx:
-    image: nginx:alpine
-    container_name: mcp-nginx
-    restart: unless-stopped
-    ports:
-      - "8500:8500"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - /home/ubuntu/Digitrends/deployment/data/certbot/conf:/etc/letsencrypt:ro
-    depends_on:
-      - mcp-app
-    networks:
-      - mcp-network
+      - onyx_default
 
 networks:
   mcp-network:
     driver: bridge
+  onyx_default:
+    external: true
