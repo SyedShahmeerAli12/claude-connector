@@ -2,3 +2,5 @@ fastapi
 uvicorn
 mcp
 yfinance
+python-jose[cryptography]
+httpx

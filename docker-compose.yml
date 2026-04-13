@@ -3,6 +3,8 @@ services:
     build: .
     container_name: mcp-app
     restart: unless-stopped
+    env_file:
+      - .env
     expose:
       - "8000"
     networks:
