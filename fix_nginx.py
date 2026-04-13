@@ -24,7 +24,7 @@ mcp_block = """    location /mcp {
 
 """
 
-anchor = "    location / {\n        # Rate limiting for general requests"
+anchor = "    location / {\n        # misc headers"
 
 if anchor in content:
     # Only add if not already present
