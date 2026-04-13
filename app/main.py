@@ -1,6 +1,8 @@
 import os
 import httpx
 import yfinance as yf
+from pathlib import Path
+from fastapi.responses import HTMLResponse
 from jose import jwt, JWTError
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
@@ -175,6 +177,16 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
 app = FastAPI()
 app.add_middleware(AuthMiddleware)
+
+
+@app.get("/docs", response_class=HTMLResponse)
+async def documentation():
+    return Path("/app/docs.html").read_text()
+
+
+@app.get("/privacy", response_class=HTMLResponse)
+async def privacy_policy():
+    return Path("/app/privacy.html").read_text()
 
 
 @app.get("/.well-known/oauth-authorization-server")

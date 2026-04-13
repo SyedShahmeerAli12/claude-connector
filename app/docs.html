@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saudi Exchange MCP - Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
+        h1 { color: #1a1a2e; border-bottom: 2px solid #00a86b; padding-bottom: 10px; }
+        h2 { color: #1a1a2e; margin-top: 30px; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .tool { background: #f9f9f9; border-left: 4px solid #00a86b; padding: 10px 15px; margin: 10px 0; border-radius: 0 5px 5px 0; }
+        .example { background: #e8f5e9; padding: 10px 15px; border-radius: 5px; margin: 5px 0; font-style: italic; }
+    </style>
+</head>
+<body>
+
+    <h1>Saudi Exchange MCP</h1>
+    <p>Real-time stock market data for Saudi Exchange (Tadawul) listed companies, accessible directly through Claude.</p>
+
+    <h2>What It Does</h2>
+    <p>This connector gives Claude access to live stock data from the Saudi Exchange (Tadawul), including prices, historical data, and company information for all major listed companies.</p>
+
+    <h2>How to Connect</h2>
+    <ol>
+        <li>Open Claude.ai</li>
+        <li>Go to <strong>Settings → Connectors</strong></li>
+        <li>Find <strong>Saudi Exchange</strong> and click <strong>Connect</strong></li>
+        <li>Log in with your account when prompted</li>
+        <li>You're ready — just ask Claude about Saudi stocks</li>
+    </ol>
+
+    <h2>Available Tools</h2>
+
+    <div class="tool">
+        <strong>get_stock_price</strong>
+        <p>Get the real-time price for any Tadawul-listed stock.</p>
+        <div class="example">"What is Saudi Aramco's stock price right now?"</div>
+        <div class="example">"Get me the current price of 2222.SR"</div>
+    </div>
+
+    <div class="tool">
+        <strong>get_top_saudi_stocks</strong>
+        <p>Get live prices for the top 10 Saudi Exchange listed companies.</p>
+        <div class="example">"Show me today's top Saudi stocks"</div>
+        <div class="example">"Which Saudi stocks are up today?"</div>
+    </div>
+
+    <div class="tool">
+        <strong>get_stock_history</strong>
+        <p>Get historical price data for any Saudi stock. Supports periods: 1d, 5d, 1mo, 3mo, 6mo, 1y.</p>
+        <div class="example">"Show me SABIC's stock price for the last 3 months"</div>
+        <div class="example">"What was Al Rajhi Bank's price trend over the past year?"</div>
+    </div>
+
+    <div class="tool">
+        <strong>get_stock_info</strong>
+        <p>Get detailed company information including sector, market cap, employees, and description.</p>
+        <div class="example">"Tell me about Saudi Aramco as a company"</div>
+        <div class="example">"What sector is STC in and what's their market cap?"</div>
+    </div>
+
+    <h2>Stock Symbol Format</h2>
+    <p>Saudi Exchange stocks use the <code>.SR</code> suffix. Common symbols:</p>
+    <pre>2222.SR — Saudi Aramco
+7010.SR — STC
+2010.SR — SABIC
+1180.SR — Al Rajhi Bank
+1211.SR — Maaden
+3010.SR — Saudi Cement</pre>
+
+    <h2>Support</h2>
+    <p>For help or issues, contact: <a href="mailto:ashahmeer73@gmail.com">ashahmeer73@gmail.com</a></p>
+
+    <h2>Data Source</h2>
+    <p>Data is sourced in real-time from Yahoo Finance. Market data may be delayed up to 15 minutes during trading hours.</p>
+
+</body>
+</html>
