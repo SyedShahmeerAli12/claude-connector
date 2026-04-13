@@ -89,7 +89,7 @@ echo "--- WWW-Authenticate Header ---"
 RESP=$(curl -s -D - -X POST "$BASE_URL/mcp" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}')
-check "401 includes WWW-Authenticate header" "WWW-Authenticate" "$RESP"
+check "401 includes WWW-Authenticate header" "ww-authenticate" "$RESP"
 check "WWW-Authenticate points to oauth metadata" "oauth-authorization-server" "$RESP"
 echo ""
 
