@@ -86,7 +86,7 @@ echo ""
 
 # 7. WWW-Authenticate header present on 401
 echo "--- WWW-Authenticate Header ---"
-RESP=$(curl -s -I -X POST "$BASE_URL/mcp" \
+RESP=$(curl -s -D - -X POST "$BASE_URL/mcp" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}')
 check "401 includes WWW-Authenticate header" "WWW-Authenticate" "$RESP"
