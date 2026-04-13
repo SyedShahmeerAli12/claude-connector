@@ -22,20 +22,17 @@ mcp_block = """    location /mcp {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-"""
+    location = /docs {
+        proxy_pass http://mcp-app:8000/docs;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
 
-anchor = "    location / {\n        # misc headers"
-
-if anchor in content:
-    # Only add if not already present
-    if "location /mcp" not in content:
-        content = content.replace(anchor, mcp_block + anchor, 1)
-        open('/tmp/app.conf', 'w').write(content)
-        print("Done - /mcp and .well-known blocks added")
-    elif "oauth-authorization-server" not in content:
-        # /mcp exists but .well-known doesn't — add just the .well-known block
-        well_known_block = """    location /.well-known/oauth-authorization-server {
-        proxy_pass http://mcp-app:8000/.well-known/oauth-authorization-server;
+    location = /privacy {
+        proxy_pass http://mcp-app:8000/privacy;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -44,10 +41,26 @@ if anchor in content:
     }
 
 """
-        content = content.replace(anchor, well_known_block + anchor, 1)
-        open('/tmp/app.conf', 'w').write(content)
-        print("Done - .well-known block added")
+
+anchor = "    location / {\n        # misc headers"
+
+if anchor in content:
+    if "location = /privacy" in content:
+        print("All blocks already present, no changes made")
     else:
-        print("Both blocks already present, no changes made")
+        # Remove old partial blocks and reinsert full set cleanly
+        # Strip any previously inserted mcp/well-known blocks before anchor
+        import re
+        # Remove everything we previously inserted before the anchor
+        content = re.sub(
+            r'(    location /mcp \{.*?\}\n\n|'
+            r'    location /\.well-known/oauth-authorization-server \{.*?\}\n\n|'
+            r'    location = /docs \{.*?\}\n\n|'
+            r'    location = /privacy \{.*?\}\n\n)',
+            '', content, flags=re.DOTALL
+        )
+        content = content.replace(anchor, mcp_block + anchor, 1)
+        open('/tmp/app.conf', 'w').write(content)
+        print("Done - all MCP blocks added")
 else:
     print("ERROR - anchor not found, config not changed")
