@@ -154,7 +154,7 @@ def get_stock_info(symbol: str) -> dict:
 # --- FastAPI outer app with auth middleware ---
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        if request.url.path.startswith("/mcp"):
+        if request.url.path == "/mcp" or request.url.path.startswith("/mcp/"):
             auth = request.headers.get("Authorization", "")
             if not auth.startswith("Bearer "):
                 return JSONResponse(
