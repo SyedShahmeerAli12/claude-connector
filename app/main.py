@@ -179,12 +179,12 @@ app = FastAPI()
 app.add_middleware(AuthMiddleware)
 
 
-@app.get("/docs", response_class=HTMLResponse)
+@app.get("/mcp-docs", response_class=HTMLResponse)
 async def documentation():
     return Path("/app/docs.html").read_text()
 
 
-@app.get("/privacy", response_class=HTMLResponse)
+@app.get("/mcp-privacy", response_class=HTMLResponse)
 async def privacy_policy():
     return Path("/app/privacy.html").read_text()
 

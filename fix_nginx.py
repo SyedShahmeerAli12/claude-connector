@@ -22,8 +22,8 @@ mcp_block = """    location /mcp {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location = /docs {
-        proxy_pass http://mcp-app:8000/docs;
+    location = /mcp-docs {
+        proxy_pass http://mcp-app:8000/mcp-docs;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -31,8 +31,8 @@ mcp_block = """    location /mcp {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location = /privacy {
-        proxy_pass http://mcp-app:8000/privacy;
+    location = /mcp-privacy {
+        proxy_pass http://mcp-app:8000/mcp-privacy;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -45,7 +45,7 @@ mcp_block = """    location /mcp {
 anchor = "    location / {\n        # misc headers"
 
 if anchor in content:
-    if "location = /privacy" in content:
+    if "location = /mcp-privacy" in content:
         print("All blocks already present, no changes made")
     else:
         # Remove old partial blocks and reinsert full set cleanly
@@ -56,7 +56,9 @@ if anchor in content:
             r'(    location /mcp \{.*?\}\n\n|'
             r'    location /\.well-known/oauth-authorization-server \{.*?\}\n\n|'
             r'    location = /docs \{.*?\}\n\n|'
-            r'    location = /privacy \{.*?\}\n\n)',
+            r'    location = /privacy \{.*?\}\n\n|'
+            r'    location = /mcp-docs \{.*?\}\n\n|'
+            r'    location = /mcp-privacy \{.*?\}\n\n)',
             '', content, flags=re.DOTALL
         )
         content = content.replace(anchor, mcp_block + anchor, 1)
