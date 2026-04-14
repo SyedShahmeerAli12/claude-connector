@@ -3,78 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saudi Exchange MCP - Documentation</title>
+    <title>Saudi Exchange — Documentation</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #333; }
-        h1 { color: #1a1a2e; border-bottom: 2px solid #00a86b; padding-bottom: 10px; }
-        h2 { color: #1a1a2e; margin-top: 30px; }
-        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
-        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
-        .tool { background: #f9f9f9; border-left: 4px solid #00a86b; padding: 10px 15px; margin: 10px 0; border-radius: 0 5px 5px 0; }
-        .example { background: #e8f5e9; padding: 10px 15px; border-radius: 5px; margin: 5px 0; font-style: italic; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #1a1a2e;
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header .badge {
+            display: inline-block;
+            background: rgba(0, 200, 120, 0.15);
+            border: 1px solid rgba(0, 200, 120, 0.4);
+            color: #00c878;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        header h1 {
+            font-size: 2.6em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            color: rgba(255,255,255,0.7);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 50px 24px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 36px;
+            margin-bottom: 28px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04);
+        }
+
+        h2 {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 .icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #00c878, #00a86b);
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+
+        p { margin-bottom: 14px; color: #444; }
+
+        ol, ul { padding-left: 20px; color: #444; }
+        ol li, ul li { margin-bottom: 8px; }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .tool-grid { grid-template-columns: 1fr; }
+        }
+
+        .tool-card {
+            background: #f8fffe;
+            border: 1px solid #e0f5ee;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .tool-card .tool-name {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            font-weight: 700;
+            color: #00a86b;
+            background: #e8f8f2;
+            padding: 3px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .tool-card p {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .example {
+            background: #f4f4f4;
+            border-left: 3px solid #00a86b;
+            padding: 6px 10px;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.82em;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .symbol-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.92em;
+        }
+
+        .symbol-table th {
+            background: #f0f0f0;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .symbol-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #444;
+        }
+
+        .symbol-table tr:last-child td { border-bottom: none; }
+
+        .symbol-table td:first-child {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: #00a86b;
+        }
+
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps li {
+            counter-increment: step;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            background: linear-gradient(135deg, #00c878, #00a86b);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85em;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .notice {
+            background: #fffbea;
+            border: 1px solid #ffe58f;
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 0.9em;
+            color: #7a5c00;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #aaa;
+            font-size: 0.85em;
+        }
+
+        a { color: #00a86b; text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <h1>Saudi Exchange MCP</h1>
-    <p>Real-time stock market data for Saudi Exchange (Tadawul) listed companies, accessible directly through Claude.</p>
+<header>
+    <div class="badge">MCP Connector</div>
+    <h1>Saudi Exchange</h1>
+    <p>Real-time stock market data for Saudi Exchange (Tadawul) listed companies — powered by Digitrends</p>
+</header>
 
-    <h2>What It Does</h2>
-    <p>This connector gives Claude access to live stock data from the Saudi Exchange (Tadawul), including prices, historical data, and company information for all major listed companies.</p>
+<div class="container">
 
-    <h2>How to Connect</h2>
-    <ol>
-        <li>Open Claude.ai</li>
-        <li>Go to <strong>Settings → Connectors</strong></li>
-        <li>Find <strong>Saudi Exchange</strong> and click <strong>Connect</strong></li>
-        <li>Log in with your account when prompted</li>
-        <li>You're ready — just ask Claude about Saudi stocks</li>
-    </ol>
-
-    <h2>Available Tools</h2>
-
-    <div class="tool">
-        <strong>get_stock_price</strong>
-        <p>Get the real-time price for any Tadawul-listed stock.</p>
-        <div class="example">"What is Saudi Aramco's stock price right now?"</div>
-        <div class="example">"Get me the current price of 2222.SR"</div>
+    <div class="section">
+        <h2><span class="icon">📋</span> Overview</h2>
+        <p>The Saudi Exchange MCP connector gives Claude direct access to live market data from the Saudi Exchange (Tadawul) — the largest stock exchange in the Middle East. Ask Claude about stock prices, company financials, historical performance, and more in natural language, without leaving your conversation.</p>
+        <p>Data is sourced in real-time from Yahoo Finance and covers all major Tadawul-listed companies including Saudi Aramco, STC, SABIC, Al Rajhi Bank, and hundreds more.</p>
     </div>
 
-    <div class="tool">
-        <strong>get_top_saudi_stocks</strong>
-        <p>Get live prices for the top 10 Saudi Exchange listed companies.</p>
-        <div class="example">"Show me today's top Saudi stocks"</div>
-        <div class="example">"Which Saudi stocks are up today?"</div>
+    <div class="section">
+        <h2><span class="icon">🚀</span> How to Connect</h2>
+        <ol class="steps">
+            <li>Open <strong>Claude.ai</strong> in your browser</li>
+            <li>Navigate to <strong>Settings → Connectors</strong></li>
+            <li>Find <strong>Saudi Exchange</strong> and click <strong>Connect</strong></li>
+            <li>Log in with your account when the Auth0 prompt appears</li>
+            <li>You're ready — just ask Claude about Saudi stocks in any conversation</li>
+        </ol>
+        <br>
+        <div class="notice">
+            ⚡ No API key or subscription required. A free account login is all you need to get started.
+        </div>
     </div>
 
-    <div class="tool">
-        <strong>get_stock_history</strong>
-        <p>Get historical price data for any Saudi stock. Supports periods: 1d, 5d, 1mo, 3mo, 6mo, 1y.</p>
-        <div class="example">"Show me SABIC's stock price for the last 3 months"</div>
-        <div class="example">"What was Al Rajhi Bank's price trend over the past year?"</div>
+    <div class="section">
+        <h2><span class="icon">🛠</span> Available Tools</h2>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <span class="tool-name">get_stock_price</span>
+                <p>Get the real-time price, change, and volume for any Tadawul-listed stock.</p>
+                <div class="example">"What is Saudi Aramco's stock price right now?"</div>
+                <div class="example">"Is Al Rajhi Bank up or down today?"</div>
+            </div>
+            <div class="tool-card">
+                <span class="tool-name">get_top_saudi_stocks</span>
+                <p>Get a live snapshot of the top 10 Saudi Exchange listed companies with price trends.</p>
+                <div class="example">"Show me today's top Saudi stocks"</div>
+                <div class="example">"Which Saudi stocks are performing best today?"</div>
+            </div>
+            <div class="tool-card">
+                <span class="tool-name">get_stock_history</span>
+                <p>Fetch historical OHLCV data for any Saudi stock. Supports 1d, 5d, 1mo, 3mo, 6mo, 1y periods.</p>
+                <div class="example">"Show SABIC's price chart for the last 3 months"</div>
+                <div class="example">"How has Aramco performed over the past year?"</div>
+            </div>
+            <div class="tool-card">
+                <span class="tool-name">get_stock_info</span>
+                <p>Get detailed company information — sector, market cap, employees, business description, and website.</p>
+                <div class="example">"Tell me about STC as a company"</div>
+                <div class="example">"What is Maaden's market cap and sector?"</div>
+            </div>
+        </div>
     </div>
 
-    <div class="tool">
-        <strong>get_stock_info</strong>
-        <p>Get detailed company information including sector, market cap, employees, and description.</p>
-        <div class="example">"Tell me about Saudi Aramco as a company"</div>
-        <div class="example">"What sector is STC in and what's their market cap?"</div>
+    <div class="section">
+        <h2><span class="icon">📈</span> Common Stock Symbols</h2>
+        <p>Saudi Exchange stocks use the <strong>.SR</strong> suffix. Here are the most commonly traded:</p>
+        <table class="symbol-table">
+            <thead>
+                <tr><th>Symbol</th><th>Company</th><th>Sector</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>2222.SR</td><td>Saudi Aramco</td><td>Energy</td></tr>
+                <tr><td>7010.SR</td><td>STC</td><td>Telecommunications</td></tr>
+                <tr><td>2010.SR</td><td>SABIC</td><td>Petrochemicals</td></tr>
+                <tr><td>1180.SR</td><td>Al Rajhi Bank</td><td>Banking</td></tr>
+                <tr><td>1211.SR</td><td>Maaden</td><td>Mining</td></tr>
+                <tr><td>2350.SR</td><td>Saudi Kayan</td><td>Petrochemicals</td></tr>
+                <tr><td>4200.SR</td><td>Saudi Telecom</td><td>Telecommunications</td></tr>
+                <tr><td>3010.SR</td><td>Saudi Cement</td><td>Building Materials</td></tr>
+            </tbody>
+        </table>
     </div>
 
-    <h2>Stock Symbol Format</h2>
-    <p>Saudi Exchange stocks use the <code>.SR</code> suffix. Common symbols:</p>
-    <pre>2222.SR — Saudi Aramco
-7010.SR — STC
-2010.SR — SABIC
-1180.SR — Al Rajhi Bank
-1211.SR — Maaden
-3010.SR — Saudi Cement</pre>
+    <div class="section">
+        <h2><span class="icon">⚠️</span> Important Notes</h2>
+        <ul>
+            <li>Market data may be delayed by up to <strong>15 minutes</strong> during live trading hours</li>
+            <li>Trading hours for Tadawul are <strong>Sunday – Thursday, 10:00 AM – 3:00 PM AST</strong></li>
+            <li>This connector is <strong>read-only</strong> — it does not execute trades or access any brokerage accounts</li>
+            <li>Data is provided for informational purposes only and should not be considered financial advice</li>
+        </ul>
+    </div>
 
-    <h2>Support</h2>
-    <p>For help or issues, contact: <a href="mailto:ashahmeer73@gmail.com">ashahmeer73@gmail.com</a></p>
+    <div class="section">
+        <h2><span class="icon">💬</span> Support</h2>
+        <p>Having trouble connecting or seeing unexpected results? Reach out and we'll help you get sorted.</p>
+        <p>📧 Email: <a href="mailto:ashahmeer73@gmail.com">ashahmeer73@gmail.com</a></p>
+        <p>🌐 Website: <a href="https://digitrends.sa" target="_blank">digitrends.sa</a></p>
+    </div>
 
-    <h2>Data Source</h2>
-    <p>Data is sourced in real-time from Yahoo Finance. Market data may be delayed up to 15 minutes during trading hours.</p>
+</div>
+
+<footer>
+    © 2026 Digitrends. Saudi Exchange MCP Connector. Data provided by Yahoo Finance.
+</footer>
 
 </body>
 </html>
